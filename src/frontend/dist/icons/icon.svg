@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <clipPath id="roundedClip">
+      <rect x="0" y="0" width="512" height="512" rx="112" ry="112" />
+    </clipPath>
+    <radialGradient id="glowGrad" cx="50%" cy="30%" r="65%">
+      <stop offset="0%" style="stop-color:#162416;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0F1923;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  <!-- Background: dark navy, squircle -->
+  <rect x="0" y="0" width="512" height="512" rx="112" ry="112" fill="#0F1923" />
+  <rect x="0" y="0" width="512" height="512" rx="112" ry="112" fill="url(#glowGrad)" />
+
+  <g clip-path="url(#roundedClip)">
+    <!-- Rising trend line -->
+    <polyline
+      points="148,240 210,190 268,210 340,148"
+      fill="none"
+      stroke="#C8FF00"
+      stroke-width="18"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <!-- Arrowhead at trend line end -->
+    <polygon points="340,148 316,142 324,168" fill="#C8FF00" />
+
+    <!-- Dollar sign: vertical bar -->
+    <rect x="244" y="250" width="24" height="196" rx="12" fill="#C8FF00" />
+    <!-- Dollar sign: S-curve -->
+    <path
+      d="M 188 300 Q 188 256 256 256 Q 324 256 324 300 Q 324 342 256 342 Q 188 342 188 384 Q 188 428 256 428 Q 324 428 324 384"
+      fill="none"
+      stroke="#C8FF00"
+      stroke-width="30"
+      stroke-linecap="round"
+    />
+  </g>
+</svg>

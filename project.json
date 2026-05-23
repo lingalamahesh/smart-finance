@@ -1,0 +1,21 @@
+{
+  "overview": "Myfinance is a personal finance manager with full multilingual support — English plus 21 official Indian languages.",
+  "features": [
+    "English as default language",
+    "21 official Indian languages: Hindi, Bengali, Telugu, Marathi, Tamil, Urdu, Gujarati, Kannada, Odia, Malayalam, Punjabi, Assamese, Maithili, Santali, Kashmiri, Nepali, Sindhi, Konkani, Dogri, Manipuri, Bodo, Sanskrit",
+    "Language switcher in header navigation",
+    "Language switcher in Settings page",
+    "Both switchers stay synchronized",
+    "Language preference saved across sessions",
+    "All pages, labels, categories, and month names translated"
+  ],
+  "category": "productivity",
+  "tags": [
+    "finance",
+    "personal-finance",
+    "multilingual",
+    "i18n",
+    "indian-languages"
+  ],
+  "last_updated": "2026-05-23T13:43:37.682Z"
+}

@@ -1,0 +1,80 @@
+type Transaccion = 
+ record {
+   categoria: text;
+   descripcion: text;
+   esEsencial: bool;
+   esGastoFijo: bool;
+   fecha: text;
+   id: text;
+   imagenUrl: opt text;
+   mesReferencia: text;
+   metodoPago: text;
+   monedaOriginal: CurrencyCode;
+   pagado: bool;
+   valor: float64;
+ };
+type TotalesMes = 
+ record {
+   gastosTotal: float64;
+   ingresosTotal: float64;
+   inversionesTotal: float64;
+   saldo: float64;
+ };
+type MetaAhorro = 
+ record {
+   ahorroAcumulado: float64;
+   ahorroEsteMes: float64;
+   id: text;
+   metaTotal: float64;
+   nombre: text;
+ };
+type MesRef = text;
+type FuenteIngreso = 
+ record {
+   descripcion: text;
+   fecha: text;
+   id: text;
+   imagenUrl: opt text;
+   mesReferencia: text;
+   monedaOriginal: CurrencyCode;
+   valor: float64;
+ };
+type ExchangeRates = 
+ record {
+   icpToCop: float64;
+   icpToUsd: float64;
+   lastUpdated: int;
+   usdToCop: float64;
+ };
+type CurrencyCode = 
+ variant {
+   COP;
+   ICP;
+   USD;
+ };
+service : {
+  addCategoria: (nombre: text) -> ();
+  addFuenteIngreso: (item: FuenteIngreso) -> ();
+  addMetaAhorro: (item: MetaAhorro) -> ();
+  addMetodoPago: (nombre: text) -> ();
+  addTransaccion: (item: Transaccion) -> ();
+  deleteCategoria: (nombre: text) -> ();
+  deleteFuenteIngreso: (id: text) -> ();
+  deleteMetaAhorro: (id: text) -> ();
+  deleteMetodoPago: (nombre: text) -> ();
+  deleteTransaccion: (id: text) -> ();
+  getCategorias: () -> (vec text) query;
+  getExchangeRates: () -> (ExchangeRates) query;
+  getFuentesIngreso: (mesRef: MesRef) -> (vec FuenteIngreso);
+  getMesesDisponibles: () -> (vec MesRef) query;
+  getMetasAhorro: () -> (vec MetaAhorro) query;
+  getMetodosPago: () -> (vec text) query;
+  getNotas: (mesRef: MesRef) -> (text) query;
+  getTotalesMes: (mesRef: MesRef) -> (TotalesMes);
+  getTransacciones: (mesRef: MesRef) -> (vec Transaccion);
+  initMes: (anio: nat, mes: nat) -> ();
+  setNotas: (mesRef: MesRef, notas: text) -> ();
+  updateFuenteIngreso: (item: FuenteIngreso) -> ();
+  updateMetaAhorro: (item: MetaAhorro) -> ();
+  updateTransaccion: (item: Transaccion) -> ();
+}
