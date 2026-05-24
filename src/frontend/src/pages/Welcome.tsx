@@ -109,7 +109,7 @@ export function WelcomePage() {
             className="font-display font-bold text-4xl leading-none mb-4 break-all"
             data-ocid="home.saldo_value"
           >
-            {convertAndFormat(saldo, "COP", selectedCurrency, exchangeRates)}
+            {convertAndFormat(saldo, "INR", selectedCurrency, exchangeRates)}
           </p>
         )}
         <div className="flex flex-wrap gap-3">
@@ -122,7 +122,7 @@ export function WelcomePage() {
               ? "…"
               : convertAndFormat(
                   ingresos,
-                  "COP",
+                  "INR",
                   selectedCurrency,
                   exchangeRates,
                 )}
@@ -136,7 +136,7 @@ export function WelcomePage() {
               ? "…"
               : convertAndFormat(
                   gastos,
-                  "COP",
+                  "INR",
                   selectedCurrency,
                   exchangeRates,
                 )}
@@ -150,7 +150,7 @@ export function WelcomePage() {
               ? "…"
               : convertAndFormat(
                   inversiones,
-                  "COP",
+                  "INR",
                   selectedCurrency,
                   exchangeRates,
                 )}
@@ -177,7 +177,7 @@ export function WelcomePage() {
             <p className="text-sm font-mono font-bold text-foreground leading-tight break-all">
               {convertAndFormat(
                 ingresos,
-                "COP",
+                "INR",
                 selectedCurrency,
                 exchangeRates,
               )}
@@ -203,7 +203,7 @@ export function WelcomePage() {
             <div className="h-5 w-20 rounded bg-muted animate-pulse mb-1" />
           ) : (
             <p className="text-sm font-mono font-bold text-foreground leading-tight break-all">
-              {convertAndFormat(gastos, "COP", selectedCurrency, exchangeRates)}
+              {convertAndFormat(gastos, "INR", selectedCurrency, exchangeRates)}
             </p>
           )}
           <span className="inline-block mt-1.5 text-[10px] font-body px-2 py-0.5 rounded-full bg-destructive/10 text-destructive">
@@ -234,7 +234,7 @@ export function WelcomePage() {
             <p className="text-sm font-mono font-bold text-foreground leading-tight break-all">
               {convertAndFormat(
                 inversiones,
-                "COP",
+                "INR",
                 selectedCurrency,
                 exchangeRates,
               )}
@@ -263,7 +263,7 @@ export function WelcomePage() {
             <div className="h-5 w-20 rounded bg-muted animate-pulse mb-1" />
           ) : (
             <p className="text-sm font-mono font-bold text-foreground leading-tight break-all">
-              {convertAndFormat(saldo, "COP", selectedCurrency, exchangeRates)}
+              {convertAndFormat(saldo, "INR", selectedCurrency, exchangeRates)}
             </p>
           )}
           <span className="inline-block mt-1.5 text-[10px] font-body px-2 py-0.5 rounded-full bg-primary/10 text-primary">

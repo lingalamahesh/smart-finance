@@ -178,7 +178,7 @@ function GoalCard({ meta, index, onUpdateEsteMes, isPending }: GoalCardProps) {
   }
 
   function fmt(v: number) {
-    return convertAndFormat(v, "COP", selectedCurrency, exchangeRates);
+    return convertAndFormat(v, "INR", selectedCurrency, exchangeRates);
   }
 
   return (
@@ -496,7 +496,7 @@ export function MetasPage() {
   );
 
   function fmt(v: number) {
-    return convertAndFormat(v, "COP", selectedCurrency, exchangeRates);
+    return convertAndFormat(v, "INR", selectedCurrency, exchangeRates);
   }
 
   return (

@@ -9,8 +9,8 @@
 import { IDL } from '@icp-sdk/core/candid';
 
 export const CurrencyCode = IDL.Variant({
-  'COP' : IDL.Null,
   'ICP' : IDL.Null,
+  'INR' : IDL.Null,
   'USD' : IDL.Null,
 });
 export const FuenteIngreso = IDL.Record({
@@ -45,8 +45,8 @@ export const Transaccion = IDL.Record({
 });
 export const ExchangeRates = IDL.Record({
   'lastUpdated' : IDL.Int,
-  'usdToCop' : IDL.Float64,
-  'icpToCop' : IDL.Float64,
+  'usdToInr' : IDL.Float64,
+  'icpToInr' : IDL.Float64,
   'icpToUsd' : IDL.Float64,
 });
 export const MesRef = IDL.Text;
@@ -88,8 +88,8 @@ export const idlInitArgs = [];
 
 export const idlFactory = ({ IDL }) => {
   const CurrencyCode = IDL.Variant({
-    'COP' : IDL.Null,
     'ICP' : IDL.Null,
+    'INR' : IDL.Null,
     'USD' : IDL.Null,
   });
   const FuenteIngreso = IDL.Record({
@@ -124,8 +124,8 @@ export const idlFactory = ({ IDL }) => {
   });
   const ExchangeRates = IDL.Record({
     'lastUpdated' : IDL.Int,
-    'usdToCop' : IDL.Float64,
-    'icpToCop' : IDL.Float64,
+    'usdToInr' : IDL.Float64,
+    'icpToInr' : IDL.Float64,
     'icpToUsd' : IDL.Float64,
   });
   const MesRef = IDL.Text;

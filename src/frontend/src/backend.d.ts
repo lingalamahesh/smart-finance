@@ -46,13 +46,13 @@ export interface MetaAhorro {
 }
 export interface ExchangeRates {
     lastUpdated: bigint;
-    usdToCop: number;
-    icpToCop: number;
+    usdToInr: number;
+    icpToInr: number;
     icpToUsd: number;
 }
 export enum CurrencyCode {
-    COP = "COP",
     ICP = "ICP",
+    INR = "INR",
     USD = "USD"
 }
 export interface backendInterface {

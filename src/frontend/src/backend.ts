@@ -128,13 +128,13 @@ export interface MetaAhorro {
 }
 export interface ExchangeRates {
     lastUpdated: bigint;
-    usdToCop: number;
-    icpToCop: number;
+    usdToInr: number;
+    icpToInr: number;
     icpToUsd: number;
 }
 export enum CurrencyCode {
-    COP = "COP",
     ICP = "ICP",
+    INR = "INR",
     USD = "USD"
 }
 export interface backendInterface {
@@ -585,13 +585,13 @@ function from_candid_record_n9(_uploadFile: (file: ExternalBlob) => Promise<Uint
     };
 }
 function from_candid_variant_n12(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
-    COP: null;
-} | {
     ICP: null;
+} | {
+    INR: null;
 } | {
     USD: null;
 }): CurrencyCode {
-    return "COP" in value ? CurrencyCode.COP : "ICP" in value ? CurrencyCode.ICP : "USD" in value ? CurrencyCode.USD : value;
+    return "ICP" in value ? CurrencyCode.ICP : "INR" in value ? CurrencyCode.INR : "USD" in value ? CurrencyCode.USD : value;
 }
 function from_candid_vec_n13(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_Transaccion>): Array<Transaccion> {
     return value.map((x)=>from_candid_Transaccion_n14(_uploadFile, _downloadFile, x));
@@ -678,16 +678,16 @@ function to_candid_record_n6(_uploadFile: (file: ExternalBlob) => Promise<Uint8A
     };
 }
 function to_candid_variant_n4(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: CurrencyCode): {
-    COP: null;
-} | {
     ICP: null;
+} | {
+    INR: null;
 } | {
     USD: null;
 } {
-    return value == CurrencyCode.COP ? {
-        COP: null
-    } : value == CurrencyCode.ICP ? {
+    return value == CurrencyCode.ICP ? {
         ICP: null
+    } : value == CurrencyCode.INR ? {
+        INR: null
     } : value == CurrencyCode.USD ? {
         USD: null
     } : value;

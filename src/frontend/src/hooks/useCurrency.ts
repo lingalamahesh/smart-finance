@@ -5,9 +5,9 @@ import { persist } from "zustand/middleware";
 
 // Static exchange rates — always available, no backend calls needed
 const STATIC_RATES: ExchangeRates = {
-  usdToCop: 4200,
-  icpToUsd: 8,
-  icpToCop: 33600,
+  usdToInr: 83,
+  icpToUsd: 10,
+  icpToInr: 830,
   lastUpdated: BigInt(0),
 };
 
@@ -21,7 +21,7 @@ interface CurrencyStore {
 export const useCurrency = create<CurrencyStore>()(
   persist(
     (set) => ({
-      selectedCurrency: "COP",
+      selectedCurrency: "INR",
       exchangeRates: STATIC_RATES,
       setSelectedCurrency: (c) => set({ selectedCurrency: c }),
       setExchangeRates: (r) => set({ exchangeRates: r }),

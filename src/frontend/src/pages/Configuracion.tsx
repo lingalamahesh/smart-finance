@@ -196,7 +196,7 @@ function ComparativoAnual({ year }: { year: number }) {
           />
           <Tooltip
             formatter={(v: number, name: string) => [
-              convertAndFormat(v, "COP", selectedCurrency, exchangeRates),
+              convertAndFormat(v, "INR", selectedCurrency, exchangeRates),
               name === "ingresos"
                 ? "Ingresos"
                 : name === "gastos"
@@ -796,13 +796,13 @@ export function ConfiguracionPage() {
               {[
                 {
                   label: "1 USD",
-                  value: exchangeRates.usdToCop,
-                  unit: "COP",
+                  value: exchangeRates.usdToInr,
+                  unit: "INR",
                 },
                 {
                   label: "1 ICP",
-                  value: exchangeRates.icpToCop,
-                  unit: "COP",
+                  value: exchangeRates.icpToInr,
+                  unit: "INR",
                 },
                 {
                   label: "1 ICP",
@@ -892,14 +892,14 @@ export function ConfiguracionPage() {
                         <p className="text-[11px] font-body text-[var(--text-secondary)] mt-0.5">
                           {convertAndFormat(
                             meta.ahorroAcumulado,
-                            "COP",
+                            "INR",
                             selectedCurrency,
                             exchangeRates,
                           )}{" "}
                           de{" "}
                           {convertAndFormat(
                             meta.metaTotal,
-                            "COP",
+                            "INR",
                             selectedCurrency,
                             exchangeRates,
                           )}
@@ -946,7 +946,7 @@ export function ConfiguracionPage() {
                       {pct.toFixed(0)}% · Restante:{" "}
                       {convertAndFormat(
                         restante,
-                        "COP",
+                        "INR",
                         selectedCurrency,
                         exchangeRates,
                       )}

@@ -4,6 +4,7 @@ import FinanzasApi "mixins/finanzas-api";
 import ExchangeRatesApi "mixins/exchange-rates-api";
 import List "mo:core/List";
 import Map "mo:core/Map";
+import Migration "migration";
 
 
 
@@ -11,6 +12,7 @@ import Map "mo:core/Map";
 
 
 
+(with migration = Migration.run)
 persistent actor {
   // Keyed by Principal → per-user month map
   let allMeses = Map.empty<Principal, Map.Map<Common.MesRef, Types.Mes>>();
@@ -27,9 +29,9 @@ persistent actor {
   // Shared ID counter (one per user-session; wraps user principal into IDs via mixin)
   let idGen = { var next = 0 };
   let defaultRates : Common.ExchangeRates = {
-    usdToCop = 4200.0;
+    usdToInr = 83.0;
     icpToUsd = 8.0;
-    icpToCop = 33600.0;
+    icpToInr = 830.0;
     lastUpdated = 0;
   };
 

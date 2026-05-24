@@ -2,24 +2,24 @@
 
 export type MesRef = string; // format: 'YYYY-MM'
 
-export type CurrencyCode = "COP" | "USD" | "ICP";
+export type CurrencyCode = "INR" | "USD" | "ICP";
 
 export const CURRENCY_SYMBOLS: Record<CurrencyCode, string> = {
-  COP: "COP$",
-  USD: "USD$",
+  INR: "₹",
+  USD: "$",
   ICP: "ICP",
 };
 
 export const CURRENCY_LABELS: Record<CurrencyCode, string> = {
-  COP: "Peso colombiano (COP)",
-  USD: "Dólar (USD)",
+  INR: "Indian Rupee (₹)",
+  USD: "US Dollar (USD)",
   ICP: "ICP",
 };
 
 export interface ExchangeRates {
-  usdToCop: number;
+  usdToInr: number;
   icpToUsd: number;
-  icpToCop: number;
+  icpToInr: number;
   lastUpdated: bigint;
 }
 

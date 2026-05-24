@@ -1,5 +1,5 @@
-// Version: 1.0.0
-type CurrencyCode__88100514 = {#COP; #ICP; #USD};
+// Version: 3.0.0
+type CurrencyCode__88100514 = {#ICP; #INR; #USD};
 type Data__791452850<K, V> =
   {var count : Nat__490723111; kvs : [var ?(K, V)]};
 type FuenteIngreso__995568563 =
@@ -27,6 +27,7 @@ type Map__297112838<K, V> =
   {var root : Node__46230540<K, V>; var size : Nat__490723111};
 type Map__605269027<K, V> = Map__158565046<K, V>;
 type MesRef__16779957 = Text;
+type MesRef__215814716 = Text;
 type Mes__341604956 = {anio : Nat; mes : Nat; notas : Text};
 type MetaAhorro__618611145 =
   {
@@ -40,6 +41,43 @@ type Nat__490723111 = Nat__920180692;
 type Nat__920180692 = Nat;
 type Node__46230540<K, V> =
   {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type OldCurrencyCode__287573030 = {#COP; #ICP; #USD};
+type OldExchangeRates__532554283 =
+  {icpToCop : Float; icpToUsd : Float; lastUpdated : Int; usdToCop : Float};
+type OldFuenteIngreso__942136555 =
+  {
+    descripcion : Text;
+    fecha : Text;
+    id : Text;
+    imagenUrl : ?Text;
+    mesReferencia : Text;
+    monedaOriginal : OldCurrencyCode__287573030;
+    valor : Float
+  };
+type OldMes__149042427 = {anio : Nat; mes : Nat; notas : Text};
+type OldMetaAhorro__360119272 =
+  {
+    ahorroAcumulado : Float;
+    ahorroEsteMes : Float;
+    id : Text;
+    metaTotal : Float;
+    nombre : Text
+  };
+type OldTransaccion__1029972573 =
+  {
+    categoria : Text;
+    descripcion : Text;
+    esEsencial : Bool;
+    esGastoFijo : Bool;
+    fecha : Text;
+    id : Text;
+    imagenUrl : ?Text;
+    mesReferencia : Text;
+    metodoPago : Text;
+    monedaOriginal : OldCurrencyCode__287573030;
+    pagado : Bool;
+    valor : Float
+  };
 type Transaccion__565258319 =
   {
     categoria : Text;
@@ -55,7 +93,21 @@ type Transaccion__565258319 =
     pagado : Bool;
     valor : Float
   };
-actor {
+actor ({
+  in allCategorias : Map__605269027<Principal, List__415060402<Text>>;
+  in allFuentesIngreso :
+    Map__605269027<Principal, List__415060402<OldFuenteIngreso__942136555>>;
+  in allMeses :
+    Map__605269027<Principal,
+                    Map__605269027<MesRef__215814716, OldMes__149042427>>;
+  in allMetas :
+    Map__605269027<Principal, List__415060402<OldMetaAhorro__360119272>>;
+  in allMetodosPago : Map__605269027<Principal, List__415060402<Text>>;
+  in allTransacciones :
+    Map__605269027<Principal, List__415060402<OldTransaccion__1029972573>>;
+  in defaultRates : OldExchangeRates__532554283;
+  in idGen : {var next : Nat}
+}, {
   stable allCategorias :
     {
       var root : Node__46230540<Principal, List__415060402<Text>>;
@@ -92,6 +144,6 @@ actor {
       var size : Nat__490723111
     };
   stable defaultRates :
-    {icpToCop : Float; icpToUsd : Float; lastUpdated : Int; usdToCop : Float};
+    {icpToInr : Float; icpToUsd : Float; lastUpdated : Int; usdToInr : Float};
   stable idGen : {var next : Nat}
-};
+});

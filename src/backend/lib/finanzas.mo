@@ -392,7 +392,7 @@ module {
           valor = totalesPrev.saldo;
           fecha = "";
           mesReferencia = ref;
-          monedaOriginal = #COP;
+          monedaOriginal = #INR;
           imagenUrl = null;
         });
       };

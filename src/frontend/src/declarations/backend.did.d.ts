@@ -10,13 +10,13 @@ import type { ActorMethod } from '@icp-sdk/core/agent';
 import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
-export type CurrencyCode = { 'COP' : null } |
-  { 'ICP' : null } |
+export type CurrencyCode = { 'ICP' : null } |
+  { 'INR' : null } |
   { 'USD' : null };
 export interface ExchangeRates {
   'lastUpdated' : bigint,
-  'usdToCop' : number,
-  'icpToCop' : number,
+  'usdToInr' : number,
+  'icpToInr' : number,
   'icpToUsd' : number,
 }
 export interface FuenteIngreso {

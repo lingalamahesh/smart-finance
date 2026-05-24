@@ -15,6 +15,14 @@ export function formatCurrency(value: number, currency: CurrencyCode): string {
     }).format(value);
     return `${symbol} ${formatted}`;
   }
+  if (currency === "INR") {
+    // INR: use en-IN locale for proper Indian number formatting
+    const formatted = new Intl.NumberFormat("en-IN", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(value);
+    return `${symbol}${formatted}`;
+  }
   const formatted = new Intl.NumberFormat("en-US", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
@@ -23,8 +31,8 @@ export function formatCurrency(value: number, currency: CurrencyCode): string {
 }
 
 /**
- * Converts an amount from one currency to another using COP as the base currency.
- * All stored values are treated as COP when no explicit currency is given.
+ * Converts an amount from one currency to another using INR as the base currency.
+ * All stored values are treated as INR when no explicit currency is given.
  */
 export function convertCurrency(
   amount: number,
@@ -33,16 +41,16 @@ export function convertCurrency(
   rates: ExchangeRates,
 ): number {
   if (from === to) return amount;
-  // Convert to COP first (base currency)
-  let copAmount = amount;
-  if (from === "USD") copAmount = amount * rates.usdToCop;
-  else if (from === "ICP") copAmount = amount * rates.icpToCop;
-  // from === "COP" → already in COP
-  // Convert from COP to target
-  if (to === "COP") return copAmount;
-  if (to === "USD") return copAmount / rates.usdToCop;
-  if (to === "ICP") return copAmount / rates.icpToCop;
-  return copAmount;
+  // Convert to INR first (base currency)
+  let inrAmount = amount;
+  if (from === "USD") inrAmount = amount * rates.usdToInr;
+  else if (from === "ICP") inrAmount = amount * rates.icpToInr;
+  // from === "INR" → already in INR
+  // Convert from INR to target
+  if (to === "INR") return inrAmount;
+  if (to === "USD") return inrAmount / rates.usdToInr;
+  if (to === "ICP") return inrAmount / rates.icpToInr;
+  return inrAmount;
 }
 
 /**

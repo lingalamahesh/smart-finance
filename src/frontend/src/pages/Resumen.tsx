@@ -594,7 +594,7 @@ function FuenteCard({ fuente, index, onEdit, onDelete }: FuenteCardProps) {
       <span className="text-sm font-mono font-semibold text-[oklch(0.50_0.15_170)] shrink-0">
         {convertAndFormat(
           fuente.valor,
-          (fuente.monedaOriginal as CurrencyCode) || "COP",
+          (fuente.monedaOriginal as CurrencyCode) || "INR",
           selectedCurrency,
           exchangeRates,
         )}
@@ -810,7 +810,7 @@ export function ResumenPage() {
                 ? "…"
                 : convertAndFormat(
                     ingresos,
-                    "COP",
+                    "INR",
                     selectedCurrency,
                     exchangeRates,
                   )}

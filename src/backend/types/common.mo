@@ -12,19 +12,19 @@ module {
 
   // Supported currency codes
   public type CurrencyCode = {
-    #COP;
+    #INR;
     #USD;
     #ICP;
   };
 
   // Cached exchange rates
-  // usdToCop: how many COP = 1 USD (e.g. 4200)
+  // usdToInr: how many INR = 1 USD (e.g. 83.0)
   // icpToUsd: how many USD = 1 ICP
-  // icpToCop: how many COP = 1 ICP
+  // icpToInr: how many INR = 1 ICP
   public type ExchangeRates = {
-    usdToCop : Float;
+    usdToInr : Float;
     icpToUsd : Float;
-    icpToCop : Float;
+    icpToInr : Float;
     lastUpdated : Int; // nanoseconds
   };
 };

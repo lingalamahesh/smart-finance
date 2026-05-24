@@ -64,7 +64,7 @@ function todayFecha(): string {
 
 function makeEmptyForm(
   mesReferencia: string,
-  defaultCurrency: CurrencyCode = "COP",
+  defaultCurrency: CurrencyCode = "INR",
 ): Omit<Transaccion, "id"> {
   return {
     descripcion: "",
@@ -146,7 +146,7 @@ function TxValue({
     <span className={`font-mono font-bold tabular-nums ${className}`}>
       {convertAndFormat(
         tx.valor,
-        (tx.monedaOriginal ?? "COP") as CurrencyCode,
+        (tx.monedaOriginal ?? "INR") as CurrencyCode,
         selectedCurrency,
         exchangeRates,
       )}
@@ -156,7 +156,7 @@ function TxValue({
 
 function ConvertedTotal({
   value,
-  from = "COP",
+  from = "INR",
 }: { value: number; from?: CurrencyCode }) {
   const { selectedCurrency, exchangeRates } = useCurrency();
   return <>{convertAndFormat(value, from, selectedCurrency, exchangeRates)}</>;

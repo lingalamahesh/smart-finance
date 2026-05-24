@@ -41674,8 +41674,8 @@ function useAuth() {
   };
 }
 const CurrencyCode = Variant({
-  "COP": Null,
   "ICP": Null,
+  "INR": Null,
   "USD": Null
 });
 const FuenteIngreso = Record({
@@ -41710,8 +41710,8 @@ const Transaccion = Record({
 });
 const ExchangeRates = Record({
   "lastUpdated": Int,
-  "usdToCop": Float64,
-  "icpToCop": Float64,
+  "usdToInr": Float64,
+  "icpToInr": Float64,
   "icpToUsd": Float64
 });
 const MesRef = Text$1;
@@ -41749,8 +41749,8 @@ Service({
 });
 const idlFactory = ({ IDL: IDL2 }) => {
   const CurrencyCode2 = IDL2.Variant({
-    "COP": IDL2.Null,
     "ICP": IDL2.Null,
+    "INR": IDL2.Null,
     "USD": IDL2.Null
   });
   const FuenteIngreso2 = IDL2.Record({
@@ -41785,8 +41785,8 @@ const idlFactory = ({ IDL: IDL2 }) => {
   });
   const ExchangeRates2 = IDL2.Record({
     "lastUpdated": IDL2.Int,
-    "usdToCop": IDL2.Float64,
-    "icpToCop": IDL2.Float64,
+    "usdToInr": IDL2.Float64,
+    "icpToInr": IDL2.Float64,
     "icpToUsd": IDL2.Float64
   });
   const MesRef2 = IDL2.Text;
@@ -42218,7 +42218,7 @@ function from_candid_record_n9(_uploadFile, _downloadFile, value) {
   };
 }
 function from_candid_variant_n12(_uploadFile, _downloadFile, value) {
-  return "COP" in value ? "COP" : "ICP" in value ? "ICP" : "USD" in value ? "USD" : value;
+  return "ICP" in value ? "ICP" : "INR" in value ? "INR" : "USD" in value ? "USD" : value;
 }
 function from_candid_vec_n13(_uploadFile, _downloadFile, value) {
   return value.map((x3) => from_candid_Transaccion_n14(_uploadFile, _downloadFile, x3));
@@ -42263,10 +42263,10 @@ function to_candid_record_n6(_uploadFile, _downloadFile, value) {
   };
 }
 function to_candid_variant_n4(_uploadFile, _downloadFile, value) {
-  return value == "COP" ? {
-    COP: null
-  } : value == "ICP" ? {
+  return value == "ICP" ? {
     ICP: null
+  } : value == "INR" ? {
+    INR: null
   } : value == "USD" ? {
     USD: null
   } : value;
@@ -42415,15 +42415,15 @@ function useBackend() {
   return { actor, isFetching, initMesMutation };
 }
 const STATIC_RATES = {
-  usdToCop: 4200,
-  icpToUsd: 8,
-  icpToCop: 33600,
+  usdToInr: 83,
+  icpToUsd: 10,
+  icpToInr: 830,
   lastUpdated: BigInt(0)
 };
 const useCurrency = create()(
   persist(
     (set) => ({
-      selectedCurrency: "COP",
+      selectedCurrency: "INR",
       exchangeRates: STATIC_RATES,
       setSelectedCurrency: (c2) => set({ selectedCurrency: c2 }),
       setExchangeRates: (r2) => set({ exchangeRates: r2 })
@@ -45890,13 +45890,13 @@ function useDeleteMetaAhorro() {
   });
 }
 const CURRENCY_SYMBOLS = {
-  COP: "COP$",
-  USD: "USD$",
+  INR: "₹",
+  USD: "$",
   ICP: "ICP"
 };
 const CURRENCY_LABELS = {
-  COP: "Peso colombiano (COP)",
-  USD: "Dólar (USD)",
+  INR: "Indian Rupee (₹)",
+  USD: "US Dollar (USD)",
   ICP: "ICP"
 };
 const CATEGORIAS_DEFAULT = [
@@ -45925,6 +45925,13 @@ function formatCurrency(value, currency) {
     }).format(value);
     return `${symbol} ${formatted2}`;
   }
+  if (currency === "INR") {
+    const formatted2 = new Intl.NumberFormat("en-IN", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(value);
+    return `${symbol}${formatted2}`;
+  }
   const formatted = new Intl.NumberFormat("en-US", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
@@ -45933,13 +45940,13 @@ function formatCurrency(value, currency) {
 }
 function convertCurrency(amount, from, to, rates) {
   if (from === to) return amount;
-  let copAmount = amount;
-  if (from === "USD") copAmount = amount * rates.usdToCop;
-  else if (from === "ICP") copAmount = amount * rates.icpToCop;
-  if (to === "COP") return copAmount;
-  if (to === "USD") return copAmount / rates.usdToCop;
-  if (to === "ICP") return copAmount / rates.icpToCop;
-  return copAmount;
+  let inrAmount = amount;
+  if (from === "USD") inrAmount = amount * rates.usdToInr;
+  else if (from === "ICP") inrAmount = amount * rates.icpToInr;
+  if (to === "INR") return inrAmount;
+  if (to === "USD") return inrAmount / rates.usdToInr;
+  if (to === "ICP") return inrAmount / rates.icpToInr;
+  return inrAmount;
 }
 function convertAndFormat(amount, from, to, rates) {
   if (!rates || from === to) return formatCurrency(amount, from);
@@ -68652,7 +68659,7 @@ function AnalisisPage() {
   const { data: transacciones = [], isLoading } = useTransacciones(mesRef);
   const { data: totales } = useTotalesMes(mesRef);
   const { t: t2 } = useTranslation();
-  const fmt = (v2) => convertAndFormat(v2, "COP", selectedCurrency, exchangeRates);
+  const fmt = (v2) => convertAndFormat(v2, "INR", selectedCurrency, exchangeRates);
   const pagadas = transacciones.filter((tx) => tx.pagado);
   const porCategoria = agruparPor(pagadas, "categoria");
   const porMetodo = agruparPor(pagadas, "metodoPago");
@@ -69826,7 +69833,7 @@ function ComparativoAnual({ year }) {
             Tooltip,
             {
               formatter: (v2, name) => [
-                convertAndFormat(v2, "COP", selectedCurrency, exchangeRates),
+                convertAndFormat(v2, "INR", selectedCurrency, exchangeRates),
                 name === "ingresos" ? "Ingresos" : name === "gastos" ? "Gastos" : "Saldo"
               ],
               contentStyle: {
@@ -70318,13 +70325,13 @@ function ConfiguracionPage() {
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex gap-2", children: [
             {
               label: "1 USD",
-              value: exchangeRates.usdToCop,
-              unit: "COP"
+              value: exchangeRates.usdToInr,
+              unit: "INR"
             },
             {
               label: "1 ICP",
-              value: exchangeRates.icpToCop,
-              unit: "COP"
+              value: exchangeRates.icpToInr,
+              unit: "INR"
             },
             {
               label: "1 ICP",
@@ -70399,7 +70406,7 @@ function ConfiguracionPage() {
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-[11px] font-body text-[var(--text-secondary)] mt-0.5", children: [
                     convertAndFormat(
                       meta.ahorroAcumulado,
-                      "COP",
+                      "INR",
                       selectedCurrency,
                       exchangeRates
                     ),
@@ -70408,7 +70415,7 @@ function ConfiguracionPage() {
                     " ",
                     convertAndFormat(
                       meta.metaTotal,
-                      "COP",
+                      "INR",
                       selectedCurrency,
                       exchangeRates
                     )
@@ -70459,7 +70466,7 @@ function ConfiguracionPage() {
                 " ",
                 convertAndFormat(
                   restante,
-                  "COP",
+                  "INR",
                   selectedCurrency,
                   exchangeRates
                 )
@@ -72179,7 +72186,7 @@ function blobToDataUrl(blob) {
 function todayFecha$1() {
   return formatFecha(/* @__PURE__ */ new Date());
 }
-function makeEmptyForm$1(mesReferencia, defaultCurrency = "COP") {
+function makeEmptyForm$1(mesReferencia, defaultCurrency = "INR") {
   return {
     descripcion: "",
     valor: 0,
@@ -72250,14 +72257,14 @@ function TxValue({
   const { selectedCurrency, exchangeRates } = useCurrency();
   return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `font-mono font-bold tabular-nums ${className}`, children: convertAndFormat(
     tx.valor,
-    tx.monedaOriginal ?? "COP",
+    tx.monedaOriginal ?? "INR",
     selectedCurrency,
     exchangeRates
   ) });
 }
 function ConvertedTotal({
   value,
-  from = "COP"
+  from = "INR"
 }) {
   const { selectedCurrency, exchangeRates } = useCurrency();
   return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: convertAndFormat(value, from, selectedCurrency, exchangeRates) });
@@ -73499,7 +73506,7 @@ function getCatEmoji(cat) {
 function todayFecha() {
   return formatFecha(/* @__PURE__ */ new Date());
 }
-function makeEmptyForm(mesReferencia, defaultCurrency = "COP") {
+function makeEmptyForm(mesReferencia, defaultCurrency = "INR") {
   return {
     descripcion: "",
     valor: 0,
@@ -73687,7 +73694,7 @@ function DonutChart({ data }) {
             Tooltip,
             {
               formatter: (value) => [
-                convertAndFormat(value, "COP", selectedCurrency, exchangeRates),
+                convertAndFormat(value, "INR", selectedCurrency, exchangeRates),
                 ""
               ],
               labelFormatter: (label) => label,
@@ -73712,7 +73719,7 @@ function DonutChart({ data }) {
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-body text-muted-foreground flex-1 truncate", children: entry.name }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-mono font-semibold text-foreground", children: convertAndFormat(
             entry.value,
-            "COP",
+            "INR",
             selectedCurrency,
             exchangeRates
           ) }),
@@ -74269,7 +74276,7 @@ function GastosFijosPage() {
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent pointer-events-none" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs font-display font-semibold uppercase tracking-widest text-muted-foreground mb-2", children: t2("fixedExpenses.monthTotal") }),
-          loadingTx ? /* @__PURE__ */ jsxRuntimeExports.jsx(Skeleton, { className: "h-10 w-44 mb-3" }) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-3xl font-mono font-bold text-foreground mb-3 leading-none", children: convertAndFormat(total, "COP", selectedCurrency, exchangeRates) }),
+          loadingTx ? /* @__PURE__ */ jsxRuntimeExports.jsx(Skeleton, { className: "h-10 w-44 mb-3" }) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-3xl font-mono font-bold text-foreground mb-3 leading-none", children: convertAndFormat(total, "INR", selectedCurrency, exchangeRates) }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-4", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs(
               "div",
@@ -74288,7 +74295,7 @@ function GastosFijosPage() {
                       "(",
                       convertAndFormat(
                         totalPagado,
-                        "COP",
+                        "INR",
                         selectedCurrency,
                         exchangeRates
                       ),
@@ -74315,7 +74322,7 @@ function GastosFijosPage() {
                       "(",
                       convertAndFormat(
                         totalPendiente,
-                        "COP",
+                        "INR",
                         selectedCurrency,
                         exchangeRates
                       ),
@@ -74540,7 +74547,7 @@ function WelcomePage() {
             {
               className: "font-display font-bold text-4xl leading-none mb-4 break-all",
               "data-ocid": "home.saldo_value",
-              children: convertAndFormat(saldo, "COP", selectedCurrency, exchangeRates)
+              children: convertAndFormat(saldo, "INR", selectedCurrency, exchangeRates)
             }
           ),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap gap-3", children: [
@@ -74553,7 +74560,7 @@ function WelcomePage() {
                   /* @__PURE__ */ jsxRuntimeExports.jsx(TrendingUp, { size: 13 }),
                   loadingTotales ? "…" : convertAndFormat(
                     ingresos,
-                    "COP",
+                    "INR",
                     selectedCurrency,
                     exchangeRates
                   )
@@ -74569,7 +74576,7 @@ function WelcomePage() {
                   /* @__PURE__ */ jsxRuntimeExports.jsx(TrendingDown, { size: 13 }),
                   loadingTotales ? "…" : convertAndFormat(
                     gastos,
-                    "COP",
+                    "INR",
                     selectedCurrency,
                     exchangeRates
                   )
@@ -74585,7 +74592,7 @@ function WelcomePage() {
                   /* @__PURE__ */ jsxRuntimeExports.jsx(PiggyBank, { size: 13 }),
                   loadingTotales ? "…" : convertAndFormat(
                     inversiones,
-                    "COP",
+                    "INR",
                     selectedCurrency,
                     exchangeRates
                   )
@@ -74609,7 +74616,7 @@ function WelcomePage() {
             ] }),
             loadingTotales ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-5 w-20 rounded bg-muted animate-pulse mb-1" }) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm font-mono font-bold text-foreground leading-tight break-all", children: convertAndFormat(
               ingresos,
-              "COP",
+              "INR",
               selectedCurrency,
               exchangeRates
             ) }),
@@ -74627,7 +74634,7 @@ function WelcomePage() {
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "w-2 h-2 rounded-full bg-destructive shrink-0" }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] font-body font-semibold uppercase tracking-wider text-destructive", children: t2("common.expense").toUpperCase() })
             ] }),
-            loadingTotales ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-5 w-20 rounded bg-muted animate-pulse mb-1" }) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm font-mono font-bold text-foreground leading-tight break-all", children: convertAndFormat(gastos, "COP", selectedCurrency, exchangeRates) }),
+            loadingTotales ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-5 w-20 rounded bg-muted animate-pulse mb-1" }) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm font-mono font-bold text-foreground leading-tight break-all", children: convertAndFormat(gastos, "INR", selectedCurrency, exchangeRates) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "inline-block mt-1.5 text-[10px] font-body px-2 py-0.5 rounded-full bg-destructive/10 text-destructive", children: pct(gastos) })
           ]
         }
@@ -74657,7 +74664,7 @@ function WelcomePage() {
             ] }),
             loadingTotales ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-5 w-20 rounded bg-muted animate-pulse mb-1" }) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm font-mono font-bold text-foreground leading-tight break-all", children: convertAndFormat(
               inversiones,
-              "COP",
+              "INR",
               selectedCurrency,
               exchangeRates
             ) }),
@@ -74682,7 +74689,7 @@ function WelcomePage() {
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "w-2 h-2 rounded-full bg-primary shrink-0" }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] font-body font-semibold uppercase tracking-wider text-primary", children: t2("common.balance").toUpperCase() })
             ] }),
-            loadingTotales ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-5 w-20 rounded bg-muted animate-pulse mb-1" }) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm font-mono font-bold text-foreground leading-tight break-all", children: convertAndFormat(saldo, "COP", selectedCurrency, exchangeRates) }),
+            loadingTotales ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-5 w-20 rounded bg-muted animate-pulse mb-1" }) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm font-mono font-bold text-foreground leading-tight break-all", children: convertAndFormat(saldo, "INR", selectedCurrency, exchangeRates) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "inline-block mt-1.5 text-[10px] font-body px-2 py-0.5 rounded-full bg-primary/10 text-primary", children: pct(saldo) })
           ]
         }
@@ -74861,7 +74868,7 @@ function GoalCard({ meta, index: index2, onUpdateEsteMes, isPending }) {
     onUpdateEsteMes(meta, newVal);
   }
   function fmt(v2) {
-    return convertAndFormat(v2, "COP", selectedCurrency, exchangeRates);
+    return convertAndFormat(v2, "INR", selectedCurrency, exchangeRates);
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -75183,7 +75190,7 @@ function MetasPage() {
     0
   );
   function fmt(v2) {
-    return convertAndFormat(v2, "COP", selectedCurrency, exchangeRates);
+    return convertAndFormat(v2, "INR", selectedCurrency, exchangeRates);
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-ocid": "metas.page", className: "flex flex-col gap-4 pb-24", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "app-card", "data-ocid": "metas.hero_card", children: [
@@ -75847,7 +75854,7 @@ function FuenteCard({ fuente, index: index2, onEdit, onDelete }) {
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-mono font-semibold text-[oklch(0.50_0.15_170)] shrink-0", children: convertAndFormat(
           fuente.valor,
-          fuente.monedaOriginal || "COP",
+          fuente.monedaOriginal || "INR",
           selectedCurrency,
           exchangeRates
         ) }),
@@ -76016,7 +76023,7 @@ function ResumenPage() {
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-display font-semibold text-muted-foreground uppercase tracking-wider", children: "Total Ingresos" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-mono font-bold text-[oklch(0.50_0.15_170)]", children: loadingTotales ? "…" : convertAndFormat(
               ingresos,
-              "COP",
+              "INR",
               selectedCurrency,
               exchangeRates
             ) })

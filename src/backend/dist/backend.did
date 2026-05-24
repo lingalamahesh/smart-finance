@@ -41,15 +41,15 @@ type FuenteIngreso =
  };
 type ExchangeRates = 
  record {
-   icpToCop: float64;
+   icpToInr: float64;
    icpToUsd: float64;
    lastUpdated: int;
-   usdToCop: float64;
+   usdToInr: float64;
  };
 type CurrencyCode = 
  variant {
-   COP;
    ICP;
+   INR;
    USD;
  };
 service : {

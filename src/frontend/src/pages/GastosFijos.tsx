@@ -84,7 +84,7 @@ function todayFecha(): string {
 
 function makeEmptyForm(
   mesReferencia: string,
-  defaultCurrency: CurrencyCode = "COP",
+  defaultCurrency: CurrencyCode = "INR",
 ): Omit<Transaccion, "id"> {
   return {
     descripcion: "",
@@ -317,7 +317,7 @@ function DonutChart({ data }: { data: ChartEntry[] }) {
           </Pie>
           <Tooltip
             formatter={(value: number) => [
-              convertAndFormat(value, "COP", selectedCurrency, exchangeRates),
+              convertAndFormat(value, "INR", selectedCurrency, exchangeRates),
               "",
             ]}
             labelFormatter={(label: string) => label}
@@ -345,7 +345,7 @@ function DonutChart({ data }: { data: ChartEntry[] }) {
             <span className="text-xs font-mono font-semibold text-foreground">
               {convertAndFormat(
                 entry.value,
-                "COP",
+                "INR",
                 selectedCurrency,
                 exchangeRates,
               )}
@@ -981,7 +981,7 @@ export function GastosFijosPage() {
           <Skeleton className="h-10 w-44 mb-3" />
         ) : (
           <p className="text-3xl font-mono font-bold text-foreground mb-3 leading-none">
-            {convertAndFormat(total, "COP", selectedCurrency, exchangeRates)}
+            {convertAndFormat(total, "INR", selectedCurrency, exchangeRates)}
           </p>
         )}
         <div className="flex gap-4">
@@ -1001,7 +1001,7 @@ export function GastosFijosPage() {
                   (
                   {convertAndFormat(
                     totalPagado,
-                    "COP",
+                    "INR",
                     selectedCurrency,
                     exchangeRates,
                   )}
@@ -1026,7 +1026,7 @@ export function GastosFijosPage() {
                   (
                   {convertAndFormat(
                     totalPendiente,
-                    "COP",
+                    "INR",
                     selectedCurrency,
                     exchangeRates,
                   )}

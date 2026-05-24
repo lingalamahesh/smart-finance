@@ -245,7 +245,7 @@ export function AnalisisPage() {
   const { t } = useTranslation();
 
   const fmt = (v: number) =>
-    convertAndFormat(v, "COP", selectedCurrency, exchangeRates);
+    convertAndFormat(v, "INR", selectedCurrency, exchangeRates);
 
   const pagadas = transacciones.filter((tx) => tx.pagado);
   const porCategoria = agruparPor(pagadas, "categoria");
